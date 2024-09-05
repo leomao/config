@@ -3,7 +3,7 @@ export LANG=en_US.UTF-8
 export LC_COLLATE=C
 
 export KEYTIMEOUT=1
-if (( $+commands[nvim )); then
+if (( $+commands[nvim] )); then
   export EDITOR="nvim"
 else
   export EDITOR="vim"
@@ -47,3 +47,5 @@ path=($path[@] "$HOME/.local/bin")
 if [[ -f "${HOME}/.zshenv.local" ]]; then
   source "${HOME}/.zshenv.local"
 fi
+
+# vim: ft=zsh
