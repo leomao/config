@@ -8,9 +8,9 @@ zle -N self-insert url-quote-magic
 # Load plugins
 #############################
 if [[ -f /etc/arch-release ]]; then
-  package_list=(fzf diff-so-fancy zsh-syntax-highlighting zsh-completions)
+  package_list=(fzf zsh-syntax-highlighting zsh-completions)
   if ! pacman -Qq ${package_list[@]} > /dev/null 2>&1; then
-    echo "You're using Archlinux! Use pacman to manage the following nice tools:"
+    echo "You're using Archlinux! Use pacman to manage the following packages:"
     echo ${package_list[@]}
     sudo pacman -S --needed ${package_list[@]}
   fi
@@ -45,15 +45,7 @@ zstyle :zplug:tag depth 1
 source "${HOME}/.zplug/init.zsh"
 
 zplug "zplug/zplug"
-zplug "mafredri/zsh-async", use:async.zsh
 zplug "leomao/vim.zsh", use:vim.zsh
-export PURE_GIT_PULL=0
-zplug "leomao/pure", use:pure.zsh, from:github, as:theme
-
-export ENHANCD_DISABLE_HOME=1
-export ENHANCD_DOT_ARG='.'
-zplug "b4b4r07/enhancd", use:init.sh
-
 if [[ -f /etc/arch-release ]]; then
   if [[ -d /usr/share/zsh/plugins/zsh-syntax-highlighting ]]; then
     zplug "/usr/share/zsh/plugins/zsh-syntax-highlighting", from:local, defer:3
@@ -61,9 +53,11 @@ if [[ -f /etc/arch-release ]]; then
   if [[ -d /usr/share/zsh/plugins/zsh-autosuggestions ]]; then
     zplug "/usr/share/zsh/plugins/zsh-autosuggestions", from:local, defer:2
   fi
+  if [[ -d /usr/share/zsh-theme-powerlevel10k ]]; then
+    zplug "/usr/share/zsh-theme-powerlevel10k", from:local, as:theme
+  fi
 else
   zplug "zsh-users/zsh-completions", use:"*.plugin.zsh"
-  zplug "so-fancy/diff-so-fancy", as:command, use:diff-so-fancy
   zplug "zsh-users/zsh-syntax-highlighting", use:"*.plugin.zsh", defer:3
 fi
 
@@ -153,7 +147,6 @@ if [[ `vim --version 2> /dev/null | grep -- +clientserver` ]] ; then
   # always use vim client server
   alias vim='vim --servername vim'
 fi
-alias vi='vim'
 alias v='vim'
 if (( $+commands[nvim] )) ; then
   alias v='nvim'
@@ -202,3 +195,5 @@ zstyle ':completion:*:manuals' separate-sections true
 if [[ -f "${HOME}/.zshrc.local" ]]; then
   source "${HOME}/.zshrc.local"
 fi
+
+# vim: ft=zsh

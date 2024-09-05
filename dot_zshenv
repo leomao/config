@@ -3,7 +3,11 @@ export LANG=en_US.UTF-8
 export LC_COLLATE=C
 
 export KEYTIMEOUT=1
-export EDITOR="vim"
+if (( $+commands[nvim )); then
+  export EDITOR="nvim"
+else
+  export EDITOR="vim"
+fi
 
 # less
 export LESS='-RfFXi -P ?f%f:(stdin). ?lb%lb?L/%L.. [?eEOF:?pb%pb\%..]'

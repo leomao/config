@@ -1,7 +1,7 @@
 # dotfiles of pika
 
 My personal dotfiles.
-These dotfiles are only tested on Archlinux with lastest software.
+These files are only tested on Archlinux with the lastest software.
 
 I have migrated to [chezmoi](https://www.chezmoi.io/).  If you use Archlinux,
 then you can install it with `pacman -S chezmoi`.
@@ -18,28 +18,20 @@ $ chezmoi update
 
 ## Zsh
 
-Need zsh 5.2+.
-
-using [zplug](https://github.com/b4b4r07/zplug).
-
-### prompt theme:
-My fork of the great theme [pure](https://github.com/leomao/pure).
+I use [zplug](https://github.com/b4b4r07/zplug) to manage plugins.
 
 ### plugins:
 
-- [zsh-async](https://github.com/mafredri/zsh-async)
 - [vim.zsh](https://github.com/leomao/vim.zsh)
 - [zsh-completions](https://github.com/zsh-users/zsh-completions)
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-- [enhancd](https://github.com/b4b4r07/enhancd)
-- [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
 
 ### Related tools
 
+- [fzf](https://github.com/junegunn/fzf)
 - [rg](https://github.com/BurntSushi/ripgrep)
-- [ag](https://github.com/ggreer/the_silver_searcher)
 - [exa](https://github.com/ogham/exa)
-- xsel
+- [delta](https://github.com/dandavison/delta)
 
 ### Customization
 
@@ -47,21 +39,15 @@ Put your customization in `~/.zshenv.local` and `~/.zshrc.local`.
 
 ## Tmux
 
-The config was written when tmux is 2.5.  But now I only tested on tmux 3.0+.
-
-tmux plugins managed by [tpm](https://github.com/tmux-plugins/tpm):
-- [tpm](https://github.com/tmux-plugins/tpm)
+I use [tpm](https://github.com/tmux-plugins/tpm) to manage plugins:
 - [tmux-copycat](https://github.com/tmux-plugins/tmux-copycat)
 - [tmux-yank](https://github.com/tmux-plugins/tmux-yank)
 - [tmux-resurrect](https://github.com/tmux-plugins/tmux-resurrect)
 
 ## Git
 
-One can add custom settings in `~/.gitconfig.local`.
-Note that this configuration use [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
-as the pager of `git diff` and `git show`. If you don't want to use the
-zsh config, you should have `diff-so-fancy` in your `PATH` or overwrite this
-setting in `~/.gitconfig.local`.
+- You will need to install [delta](https://github.com/dandavison/delta).
+* One can add custom settings in `~/.gitconfig.local`.
 
 ## Fontconfig
 
