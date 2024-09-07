@@ -81,6 +81,12 @@ zplug load
 #############################
 # don't record duplicate history
 setopt hist_ignore_dups
+setopt appendhistory
+setopt sharehistory
+setopt incappendhistory
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=5000
 
 # no flow control
 setopt noflowcontrol
