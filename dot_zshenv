@@ -42,6 +42,10 @@ if [[ $+commands[go] ]]; then
   path=($GOPATH/bin $path[@])
 fi
 
+if [[ -d "/usr/lib/rustup/bin" ]]; then
+  path=("/usr/bin/rustup/bin" $path[@])
+fi
+
 path=($path[@] "$HOME/.local/bin")
 
 if [[ -f "${HOME}/.zshenv.local" ]]; then
