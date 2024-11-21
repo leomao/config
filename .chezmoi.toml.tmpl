@@ -1,7 +1,7 @@
 {{- $name := promptString "name" -}}
 {{- $email := promptString "email" -}}
-{{- $wallpaper := promptString "wallpaper" -}}
+{{- $wallpaperPath := promptString "wallpaper path" -}}
 [data]
   name = "{{ $name }}"
   email = "{{ $email }}"
-  wallpaper = "{{ $wallpaper }}"
+  wallpaperPath = "{{ $wallpaperPath }}"
