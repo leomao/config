@@ -1,12 +1,24 @@
 # dotfiles of pika
 
 My personal dotfiles.
-These files are only tested on Archlinux with the lastest software.
+These files are only for Archlinux with the lastest software.
 
-I have migrated to [chezmoi](https://www.chezmoi.io/).  If you use Archlinux,
-then you can install it with `pacman -S chezmoi`.
+I have migrated to [chezmoi](https://www.chezmoi.io/).
 
 ## How to use
+### Install packages
+```
+$ pacman -S --needed \
+  zsh-completions \
+  zsh-autosuggestions \
+  zsh-syntax-highlighting \
+  fzf \
+  ripgrep \
+  eza \
+  git-delta \
+  chezmoi
+```
+
 ### the first time
 ```
 $ chezmoi init https://github.com/leomao/dotfiles.git
@@ -18,19 +30,18 @@ $ chezmoi update
 
 ## Zsh
 
-I use [zplug](https://github.com/b4b4r07/zplug) to manage plugins.
-
 ### plugins:
 
 - [vim.zsh](https://github.com/leomao/vim.zsh)
 - [zsh-completions](https://github.com/zsh-users/zsh-completions)
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 
 ### Related tools
 
 - [fzf](https://github.com/junegunn/fzf)
 - [rg](https://github.com/BurntSushi/ripgrep)
-- [exa](https://github.com/ogham/exa)
+- [eza](https://github.com/eza-community/eza)
 - [delta](https://github.com/dandavison/delta)
 
 ### Customization

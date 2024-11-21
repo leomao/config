@@ -5,79 +5,23 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+function source_if() {
+  [[ ! -r "$1" ]] || source "$1"
+}
+
+# prompt theme
+source_if "/usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source_if "${HOME}/.p10k.zsh"
+
+source_if "${HOME}/.zsh/vim.zsh/vim.zsh"
 
 #############################
 # Load zle
 #############################
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
-
-#############################
-# Load plugins
-#############################
-if [[ -f /etc/arch-release ]]; then
-  package_list=(fzf zsh-syntax-highlighting zsh-completions)
-  if ! pacman -Qq ${package_list[@]} > /dev/null 2>&1; then
-    echo "You're using Archlinux! Use pacman to manage the following packages:"
-    echo ${package_list[@]}
-    sudo pacman -S --needed ${package_list[@]}
-  fi
-fi
-
-if [[ -x /usr/bin/fzf && -f /usr/share/fzf/key-bindings.zsh &&
-    -f /usr/share/fzf/completion.zsh ]]; then
-  source /usr/share/fzf/key-bindings.zsh
-  source /usr/share/fzf/completion.zsh
-else
-  if ! [[ -f ~/.fzf.zsh ]] ; then
-    if ! [[ -f ~/.fzf/install ]] ; then
-      rm -rf ~/.fzf
-      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    fi
-    ~/.fzf/install --all
-  fi
-  source ~/.fzf.zsh
-fi
-
-export FZF_DEFAULT_OPTS="-m --cycle"
-if (( $+commands[rg] )) ; then
-  export FZF_DEFAULT_COMMAND='rg -l ""'
-elif (( $+commands[ag] )); then
-  export FZF_DEFAULT_COMMAND='ag -l -g ""'
-fi
-
-if ! [[ -f "${HOME}/.zplug/init.zsh" ]]; then
-  curl -sL https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
-fi
-zstyle :zplug:tag depth 1
-source "${HOME}/.zplug/init.zsh"
-
-zplug "zplug/zplug"
-zplug "leomao/vim.zsh", use:vim.zsh
-if [[ -f /etc/arch-release ]]; then
-  if [[ -d /usr/share/zsh/plugins/zsh-syntax-highlighting ]]; then
-    zplug "/usr/share/zsh/plugins/zsh-syntax-highlighting", from:local, defer:3
-  fi
-  if [[ -d /usr/share/zsh/plugins/zsh-autosuggestions ]]; then
-    zplug "/usr/share/zsh/plugins/zsh-autosuggestions", from:local, defer:2
-  fi
-  if [[ -d /usr/share/zsh-theme-powerlevel10k ]]; then
-    zplug "/usr/share/zsh-theme-powerlevel10k", from:local, as:theme
-  fi
-else
-  zplug "zsh-users/zsh-completions", use:"*.plugin.zsh"
-  zplug "zsh-users/zsh-syntax-highlighting", use:"*.plugin.zsh", defer:3
-fi
-
-export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-if ! zplug check --verbose; then
-  zplug install
-fi
-
-zplug load
 
 #############################
 # Options
@@ -112,8 +56,8 @@ setopt complete_aliases
 # Aliases
 #############################
 # List direcory contents
-if (( $+commands[exa] )) ; then
-  alias ls='exa --group-directories-first'
+if (( $+commands[eza] )) ; then
+  alias ls='eza --group-directories-first'
   alias l='ls -F'
   alias ll='ls -glF'
   alias la='ll -a'
@@ -148,12 +92,8 @@ else
   alias gg='grep -R -n'
 fi
 
-if (( $+commands[fuck] )); then
-  alias fk='fuck'
-fi
-
 # Show history
-alias history='fc -l 1'
+alias his='fc -l 1'
 
 # Tmux 256 default
 alias tmux='tmux -2'
@@ -163,9 +103,10 @@ if [[ `vim --version 2> /dev/null | grep -- +clientserver` ]] ; then
   # always use vim client server
   alias vim='vim --servername vim'
 fi
-alias v='vim'
 if (( $+commands[nvim] )) ; then
   alias v='nvim'
+else
+  alias v='vim'
 fi
 
 # Directory Stack alias
@@ -175,6 +116,16 @@ alias ds='dirs'
 # use thefuck if available
 if (( $+commands[thefuck] )) ; then
   eval $(thefuck --alias)
+  alias fk='fuck'
+fi
+
+# fzf
+if (( $+commands[fzf] )) ; then
+  source <(fzf --zsh)
+  export FZF_DEFAULT_OPTS="-m --cycle"
+  if (( $+commands[rg] )) ; then
+    export FZF_DEFAULT_COMMAND="rg --files"
+  fi
 fi
 
 #############################
@@ -208,8 +159,11 @@ zstyle ':completion:*' list-separator '-->'
 zstyle ':completion:*:manuals' separate-sections true
 
 # load custom settings
-if [[ -f "${HOME}/.zshrc.local" ]]; then
-  source "${HOME}/.zshrc.local"
-fi
+source_if "${HOME}/.zshrc.local"
+
+source_if "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source_if "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+unfunction source_if
 
 # vim: ft=zsh

@@ -1,0 +1,4 @@
+[".zsh/vim.zsh"]
+    type = "git-repo"
+    url = "https://github.com/leomao/vim.zsh.git"
+    refreshPeriod = "168h"
