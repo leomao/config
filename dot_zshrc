@@ -131,6 +131,9 @@ fi
 #############################
 # Completions
 #############################
+autoload -Uz compinit
+compinit
+
 # Important
 zstyle ':completion:*:default' menu yes=long select=2
 
